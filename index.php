@@ -60,35 +60,6 @@ $total_pages = ceil($total_records / $limit);
 		
 		
 		<div id="target-content" class="row">loading...</div>
-
-	
-		
-		<?php  
-while ($row = mysqli_fetch_array($result)) {  
-?>  
-		
-			<div class="col-md-4">			
-				<div class="card ">
-					<a href="<?= $base_url ?>templates.php?url=<?=$row["theme_url"] ?>">
-				  <div class="view overlay">
-				    <img class="card-img-top" src="<?= $row['theme_image']?>"
-				      alt="Card image cap">
-				   
-				  </div>
-				  <div class="card-body">
-				    <p class="card-text"><b><?=$row["title"] ?></b></p>	
-				  </div>
-				</a>
-				</div>
-			</div>
-
-		<?php  
-};  
-?> 
-
-
-
-			
 	
 
 		<div class="row">
