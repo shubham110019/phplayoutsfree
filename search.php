@@ -11,7 +11,7 @@ include "include/header.php";
 	
 	$search=$_POST['search'];
 	
-	$sqlsearch="";
+	$sqlsearch="SELECT * FROM `themeall` WHERE title LIKE '%".$search."%'";
 	$ressearch=$conn->query($sqlsearch);
 	
 	
@@ -34,14 +34,14 @@ include "include/header.php";
 	?>
 			<div class="col-md-4">			
 				<div class="card ">
-					<a href="templates.html">
+					<a href="<?= $base_url ?>templates.php?url=<?=$row["theme_url"] ?>">
 				  <div class="view overlay">
-				    <img class="card-img-top" src="img/interior-decor-386x241.jpg"
+				    <img class="card-img-top" src="<?= $row['theme_image']?>"
 				      alt="Card image cap">
 				   
 				  </div>
 				  <div class="card-body">
-				    <p class="card-text"><b>Interior Decor</b></p>	
+				    <p class="card-text"><b><?=$row["title"] ?></b></p>	
 				  </div>
 				</a>
 				</div>
