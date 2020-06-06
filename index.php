@@ -31,9 +31,9 @@ $total_pages = ceil($total_records / $limit);
       <br>
 
  
-    
-    	<input type="text" placeholder="Search" class="searchinput">
-
+   	 <form class="form-inline" method="post" action="search.php">
+    		<input type="text" placeholder="Search" class="searchinput" name="search">
+	</form>
     		</div>
     		
 
