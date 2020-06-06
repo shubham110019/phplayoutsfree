@@ -1,10 +1,10 @@
 <?php
-include "include/header.php";
+include "admin/db.php";
 $limit = 5;  
 if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
 $start_from = ($page-1) * $limit;  
   
-$sql = "SELECT * FROM themeall ORDER BY id ASC LIMIT $start_from, $limit";  
+$sql = "SELECT * FROM themeall ORDER BY id DESC LIMIT $start_from, $limit";  
 $rs_result = mysqli_query($conn, $sql);  
 ?>
 
