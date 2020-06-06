@@ -8,16 +8,13 @@
 <?php
 
 include "include/header.php";
-
-$limit = 9;  
-if (isset($_GET["page"])) {
-	$page  = $_GET["page"]; 
-	} 
-	else{ 
-	$page=1;
-	};  
-$start_from = ($page-1) * $limit;  
-$result = mysqli_query($conn,"SELECT * FROM themeall ORDER BY id DESC LIMIT $start_from, $limit");
+	
+$limit = 4;
+$sql = "SELECT COUNT(id) FROM themeall";  
+$rs_result = mysqli_query($conn, $sql);  
+$row = mysqli_fetch_row($rs_result);  
+$total_records = $row[0];  
+$total_pages = ceil($total_records / $limit); 
 ?>
 
 <div class="main">
@@ -60,8 +57,11 @@ $result = mysqli_query($conn,"SELECT * FROM themeall ORDER BY id DESC LIMIT $sta
 				<div class="line"></div>
 			</div>
 		</div>
+		
+		
+		<div id="target-content" class="row">loading...</div>
 
-		<div class="row">
+	
 		
 		<?php  
 while ($row = mysqli_fetch_array($result)) {  
@@ -89,24 +89,30 @@ while ($row = mysqli_fetch_array($result)) {
 
 
 			
-		</div>
+	
 
 		<div class="row">
 			<div class="col-md-12 text-center">
 
-<?php  
-
-$result_db = mysqli_query($conn,"SELECT COUNT(id) FROM themeall"); 
-$row_db = mysqli_fetch_row($result_db);  
-$total_records = $row_db[0];  
-$total_pages = ceil($total_records / $limit); 
-/* echo  $total_pages; */
-$pagLink = "<ul class='pagination text-center'>";  
-for ($i=1; $i<=$total_pages; $i++) {
-              $pagLink .= "<li class='page-item'><a class='page-link' href='index.php?page=".$i."'>".$i."</a></li>";	
-}
-echo $pagLink . "</ul>";  
-?>
+<ul class="pagination">
+                    <?php 
+					if(!empty($total_pages)){
+						for($i=1; $i<=$total_pages; $i++){
+								if($i == 1){
+									?>
+								<li class="pageitem active" id="<?php echo $i;?>"><a href="JavaScript:Void(0);" data-id="<?php echo $i;?>" class="page-link" ><?php echo $i;?></a></li>
+															
+								<?php 
+								}
+								else{
+									?>
+								<li class="pageitem" id="<?php echo $i;?>"><a href="JavaScript:Void(0);" class="page-link" data-id="<?php echo $i;?>"><?php echo $i;?></a></li>
+								<?php
+								}
+						}
+					}
+								?>
+					</ul>
 		</div>
 		</div>
 	</div>
@@ -121,3 +127,27 @@ echo $pagLink . "</ul>";
 <?php
 include "include/footer.php";
 ?>
+	
+	<script>
+	$(document).ready(function() {
+		$("#target-content").load("pagination.php?page=1");
+		$(".page-link").click(function(){
+			var id = $(this).attr("data-id");
+			var select_id = $(this).parent().attr("id");
+			$.ajax({
+				url: "pagination.php",
+				type: "GET",
+				data: {
+					page : id
+				},
+				cache: false,
+				success: function(dataResult){
+					$("#target-content").html(dataResult);
+					$(".pageitem").removeClass("active");
+					$("#"+select_id).addClass("active");
+					
+				}
+			});
+		});
+    });
+</script>
