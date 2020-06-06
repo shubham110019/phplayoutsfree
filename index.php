@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +8,7 @@
 
 include "include/header.php";
 	
-$limit = 4;
+$limit = 9;
 $sql = "SELECT COUNT(id) FROM themeall";  
 $rs_result = mysqli_query($conn, $sql);  
 $row = mysqli_fetch_row($rs_result);  
@@ -33,6 +32,7 @@ $total_pages = ceil($total_records / $limit);
  
    	 <form class="form-inline" method="post" action="search.php">
     		<input type="text" placeholder="Search" class="searchinput" name="search">
+			<input type="submit" name="submit" value="submit"/>
 	</form>
     		</div>
     		
